@@ -1,0 +1,25 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "pocket_sync",
+  "navFiles": "Files",
+  "navActivity": "Activity",
+  "fileListTitle": "Files",
+  "fileListPlaceholder": "File list (coming soon)",
+  "fileListSettingsTooltip": "Settings",
+  "fileListAddSource": "Add source",
+  "fileDetailTitle": "File detail",
+  "fileDetailPlaceholder": "FileDetail: {fileId} (coming soon)",
+  "settingsTitle": "Settings",
+  "settingsSyncSection": "Sync",
+  "settingsWifiOnly": "Sync on Wi-Fi only",
+  "settingsChargingOnly": "Sync only while charging",
+  "settingsBackgroundSync": "Background sync",
+  "settingsAboutSection": "About",
+  "settingsVersion": "Version",
+  "settingsLicenses": "Licenses",
+  "syncActivityTitle": "Activity",
+  "syncActivityPlaceholder": "Sync activity (coming soon)",
+  "errorTitle": "Error",
+  "errorPageNotFound": "Page not found: {uri}"
+}

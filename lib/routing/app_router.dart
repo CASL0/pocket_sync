@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pocket_sync/l10n/l10n_extension.dart';
 import 'package:pocket_sync/ui/core/scaffold_with_nav_bar.dart';
 import 'package:pocket_sync/ui/features/file_detail/views/file_detail_view.dart';
 import 'package:pocket_sync/ui/features/file_list/views/file_list_view.dart';
@@ -44,8 +45,13 @@ final appRouter = GoRouter(
       builder: (context, state) => const SettingsView(),
     ),
   ],
-  errorBuilder: (context, state) => Scaffold(
-    appBar: AppBar(title: const Text('エラー')),
-    body: Center(child: Text('ページが見つかりません: ${state.uri}')),
-  ),
+  errorBuilder: (context, state) {
+    final l10n = context.l10n;
+    return Scaffold(
+      appBar: AppBar(title: Text(l10n.errorTitle)),
+      body: Center(
+        child: Text(l10n.errorPageNotFound(state.uri.toString())),
+      ),
+    );
+  },
 );

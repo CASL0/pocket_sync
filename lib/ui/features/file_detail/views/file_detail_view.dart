@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pocket_sync/l10n/l10n_extension.dart';
 
 class FileDetailView extends StatelessWidget {
   const FileDetailView({required this.fileId, super.key});
@@ -7,9 +8,10 @@ class FileDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
-      appBar: AppBar(title: const Text('ファイル詳細')),
-      body: Center(child: Text('FileDetail: $fileId（実装予定）')),
+      appBar: AppBar(title: Text(l10n.fileDetailTitle)),
+      body: Center(child: Text(l10n.fileDetailPlaceholder(fileId))),
     );
   }
 }

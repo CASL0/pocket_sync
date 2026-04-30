@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pocket_sync/data/repositories/settings_repository.dart';
 import 'package:pocket_sync/domain/models/sync_settings.dart';
+import 'package:pocket_sync/l10n/app_localizations.dart';
 import 'package:pocket_sync/ui/features/settings/view_models/settings_view_model.dart';
 import 'package:pocket_sync/ui/features/settings/views/settings_view.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +26,12 @@ class _FakeSettingsRepository implements SettingsRepository {
 Widget _buildHarness({required SettingsViewModel vm}) {
   return ChangeNotifierProvider<SettingsViewModel>.value(
     value: vm,
-    child: const MaterialApp(home: SettingsView()),
+    child: const MaterialApp(
+      locale: Locale('ja'),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: SettingsView(),
+    ),
   );
 }
 

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pocket_sync/data/repositories/settings_repository.dart';
+import 'package:pocket_sync/l10n/app_localizations.dart';
+import 'package:pocket_sync/l10n/l10n_extension.dart';
 import 'package:pocket_sync/routing/app_router.dart';
 import 'package:pocket_sync/ui/features/settings/view_models/settings_view_model.dart';
 import 'package:provider/provider.dart';
@@ -12,9 +14,12 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({required this.sharedPreferences, super.key});
+  const MyApp({required this.sharedPreferences, this.locale, super.key});
 
   final SharedPreferences sharedPreferences;
+
+  /// 端末ロケールを上書きして強制する場合に指定する。テスト用途を想定。
+  final Locale? locale;
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +36,14 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp.router(
         routerConfig: appRouter,
-        title: 'pocket_sync',
+        onGenerateTitle: (context) => context.l10n.appTitle,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
+        locale: locale,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
       ),
     );
   }

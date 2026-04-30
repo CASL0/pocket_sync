@@ -11,8 +11,13 @@ void main() {
     prefs = await SharedPreferences.getInstance();
   });
 
+  Widget buildApp() => MyApp(
+    sharedPreferences: prefs,
+    locale: const Locale('ja'),
+  );
+
   testWidgets('アプリ起動時にファイル一覧画面が表示される', (tester) async {
-    await tester.pumpWidget(MyApp(sharedPreferences: prefs));
+    await tester.pumpWidget(buildApp());
     await tester.pumpAndSettle();
 
     expect(find.text('ファイル'), findsWidgets);
@@ -20,7 +25,7 @@ void main() {
   });
 
   testWidgets('AppBarの設定アイコンをタップすると設定画面に遷移する', (tester) async {
-    await tester.pumpWidget(MyApp(sharedPreferences: prefs));
+    await tester.pumpWidget(buildApp());
     await tester.pumpAndSettle();
 
     await tester.tap(find.byIcon(Icons.settings_outlined));

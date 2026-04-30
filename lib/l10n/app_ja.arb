@@ -1,0 +1,120 @@
+{
+  "@@locale": "ja",
+
+  "appTitle": "pocket_sync",
+  "@appTitle": {
+    "description": "アプリのタイトル"
+  },
+
+  "navFiles": "ファイル",
+  "@navFiles": {
+    "description": "BottomNav のファイルタブのラベル"
+  },
+
+  "navActivity": "アクティビティ",
+  "@navActivity": {
+    "description": "BottomNav のアクティビティタブのラベル"
+  },
+
+  "fileListTitle": "ファイル",
+  "@fileListTitle": {
+    "description": "ファイル一覧画面の AppBar タイトル"
+  },
+
+  "fileListPlaceholder": "ファイル一覧（実装予定）",
+  "@fileListPlaceholder": {
+    "description": "ファイル一覧画面の本実装が無い間のプレースホルダ文言"
+  },
+
+  "fileListSettingsTooltip": "設定",
+  "@fileListSettingsTooltip": {
+    "description": "ファイル一覧画面の AppBar 設定アイコンの tooltip"
+  },
+
+  "fileListAddSource": "ソースを追加",
+  "@fileListAddSource": {
+    "description": "ファイル一覧画面の FAB のラベル（同期ソースを追加）"
+  },
+
+  "fileDetailTitle": "ファイル詳細",
+  "@fileDetailTitle": {
+    "description": "ファイル詳細画面の AppBar タイトル"
+  },
+
+  "fileDetailPlaceholder": "FileDetail: {fileId}（実装予定）",
+  "@fileDetailPlaceholder": {
+    "description": "ファイル詳細画面の本実装が無い間のプレースホルダ文言",
+    "placeholders": {
+      "fileId": {
+        "type": "String",
+        "example": "abc123"
+      }
+    }
+  },
+
+  "settingsTitle": "設定",
+  "@settingsTitle": {
+    "description": "設定画面の AppBar タイトル"
+  },
+
+  "settingsSyncSection": "同期",
+  "@settingsSyncSection": {
+    "description": "設定画面の「同期」セクション見出し"
+  },
+
+  "settingsWifiOnly": "Wi-Fi接続時のみ同期",
+  "@settingsWifiOnly": {
+    "description": "Wi-Fi 接続時のみ同期するかのトグルラベル"
+  },
+
+  "settingsChargingOnly": "充電中のみ同期",
+  "@settingsChargingOnly": {
+    "description": "充電中のみ同期するかのトグルラベル"
+  },
+
+  "settingsBackgroundSync": "バックグラウンド同期",
+  "@settingsBackgroundSync": {
+    "description": "バックグラウンド同期を有効にするかのトグルラベル"
+  },
+
+  "settingsAboutSection": "アプリについて",
+  "@settingsAboutSection": {
+    "description": "設定画面の「アプリについて」セクション見出し"
+  },
+
+  "settingsVersion": "バージョン",
+  "@settingsVersion": {
+    "description": "アプリバージョン項目のラベル"
+  },
+
+  "settingsLicenses": "ライセンス",
+  "@settingsLicenses": {
+    "description": "ライセンス画面への導線項目のラベル"
+  },
+
+  "syncActivityTitle": "アクティビティ",
+  "@syncActivityTitle": {
+    "description": "同期アクティビティ画面の AppBar タイトル"
+  },
+
+  "syncActivityPlaceholder": "同期アクティビティ（実装予定）",
+  "@syncActivityPlaceholder": {
+    "description": "同期アクティビティ画面の本実装が無い間のプレースホルダ文言"
+  },
+
+  "errorTitle": "エラー",
+  "@errorTitle": {
+    "description": "ルーティングのエラー画面の AppBar タイトル"
+  },
+
+  "errorPageNotFound": "ページが見つかりません: {uri}",
+  "@errorPageNotFound": {
+    "description": "存在しないルートにアクセスしたときのエラー文言",
+    "placeholders": {
+      "uri": {
+        "type": "String",
+        "example": "/unknown-route"
+      }
+    }
+  }
+}
