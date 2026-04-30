@@ -8,3 +8,4 @@
 | [0002](0002-sync-status-as-sealed-class.md) | 同期ステータスを sealed class で表現する | accepted | 2026-04-30 |
 | [0003](0003-state-management-with-provider.md) | 状態管理に Provider + ChangeNotifier を採用する | accepted | 2026-04-30 |
 | [0004](0004-routing-with-go-router.md) | ルーティングに go_router を採用する | accepted | 2026-04-30 |
+| [0005](0005-i18n-with-flutter-localizations.md) | 国際化に flutter_localizations + ARB を採用する | accepted | 2026-05-01 |
