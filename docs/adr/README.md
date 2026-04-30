@@ -6,3 +6,4 @@
 |-----|---------|-----------|------|
 | [0001](0001-unified-file-view-with-sync-status.md) | ファイル一覧画面はローカル/リモート分離ではなく統一ビュー + 同期ステータスで表現する | accepted | 2026-04-30 |
 | [0002](0002-sync-status-as-sealed-class.md) | 同期ステータスを sealed class で表現する | accepted | 2026-04-30 |
+| [0003](0003-state-management-with-provider.md) | 状態管理に Provider + ChangeNotifier を採用する | accepted | 2026-04-30 |
