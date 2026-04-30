@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pocket_sync/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
+  late SharedPreferences prefs;
+
+  setUp(() async {
+    SharedPreferences.setMockInitialValues({});
+    prefs = await SharedPreferences.getInstance();
+  });
+
   testWidgets('アプリ起動時にファイル一覧画面が表示される', (tester) async {
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(MyApp(sharedPreferences: prefs));
     await tester.pumpAndSettle();
 
     expect(find.text('ファイル'), findsWidgets);
@@ -12,7 +20,7 @@ void main() {
   });
 
   testWidgets('AppBarの設定アイコンをタップすると設定画面に遷移する', (tester) async {
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(MyApp(sharedPreferences: prefs));
     await tester.pumpAndSettle();
 
     await tester.tap(find.byIcon(Icons.settings_outlined));
