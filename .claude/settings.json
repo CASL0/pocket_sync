@@ -1,3 +1,16 @@
 {
-  "language": "japanese"
+  "language": "japanese",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path' | { read -r f; dart format \"$f\"; } 2>/dev/null || true"
+          }
+        ]
+      }
+    ]
+  }
 }
