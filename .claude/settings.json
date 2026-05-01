@@ -2,7 +2,8 @@
   "language": "japanese",
   "permissions": {
     "allow": [
-      "Bash(mise exec -- flutter *)"
+      "Bash(mise exec -- flutter *)",
+      "Bash(mise exec -- dart *)"
     ]
   },
   "hooks": {
