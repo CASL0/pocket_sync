@@ -1,5 +1,10 @@
 {
   "language": "japanese",
+  "permissions": {
+    "allow": [
+      "Bash(mise exec -- flutter *)"
+    ]
+  },
   "hooks": {
     "PostToolUse": [
       {
