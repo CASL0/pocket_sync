@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pocket_sync/data/repositories/settings_repository.dart';
+import 'package:pocket_sync/domain/models/app_preferences.dart';
 import 'package:pocket_sync/l10n/app_localizations.dart';
 import 'package:pocket_sync/l10n/l10n_extension.dart';
 import 'package:pocket_sync/routing/app_router.dart';
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
   final SharedPreferences sharedPreferences;
 
   /// 端末ロケールを上書きして強制する場合に指定する。テスト用途を想定。
+  /// 指定された場合は `SettingsViewModel.preferences.language` の選択より優先される。
   final Locale? locale;
 
   @override
@@ -34,17 +36,43 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ],
-      child: MaterialApp.router(
-        routerConfig: appRouter,
-        onGenerateTitle: (context) => context.l10n.appTitle,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        locale: locale,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
+      child: Consumer<SettingsViewModel>(
+        builder: (context, vm, _) {
+          return MaterialApp.router(
+            routerConfig: appRouter,
+            onGenerateTitle: (context) => context.l10n.appTitle,
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+              useMaterial3: true,
+            ),
+            darkTheme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: Colors.deepPurple,
+                brightness: Brightness.dark,
+              ),
+              useMaterial3: true,
+            ),
+            themeMode: vm.preferences.themeMode,
+            locale: locale ?? localeOf(vm.preferences.language),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+          );
+        },
       ),
     );
+  }
+}
+
+/// [AppLanguage] を `MaterialApp.locale` に渡せる [Locale] に変換する。
+/// `system` の場合は `null` を返し、端末ロケールに追従させる。
+@visibleForTesting
+Locale? localeOf(AppLanguage language) {
+  switch (language) {
+    case AppLanguage.system:
+      return null;
+    case AppLanguage.ja:
+      return const Locale('ja');
+    case AppLanguage.en:
+      return const Locale('en');
   }
 }

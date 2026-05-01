@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pocket_sync/data/repositories/settings_repository.dart';
+import 'package:pocket_sync/domain/models/app_preferences.dart';
 import 'package:pocket_sync/domain/models/sync_settings.dart';
 import 'package:pocket_sync/l10n/app_localizations.dart';
 import 'package:pocket_sync/ui/features/settings/view_models/settings_view_model.dart';
@@ -9,10 +10,14 @@ import 'package:pocket_sync/ui/features/settings/views/settings_view.dart';
 import 'package:provider/provider.dart';
 
 class _FakeSettingsRepository implements SettingsRepository {
-  _FakeSettingsRepository({SyncSettings initial = const SyncSettings()})
-    : _settings = initial;
+  _FakeSettingsRepository({
+    SyncSettings initial = const SyncSettings(),
+    AppPreferences initialPreferences = const AppPreferences(),
+  }) : _settings = initial,
+       _preferences = initialPreferences;
 
   SyncSettings _settings;
+  AppPreferences _preferences;
 
   @override
   SyncSettings load() => _settings;
@@ -20,6 +25,14 @@ class _FakeSettingsRepository implements SettingsRepository {
   @override
   Future<void> save(SyncSettings settings) async {
     _settings = settings;
+  }
+
+  @override
+  AppPreferences loadPreferences() => _preferences;
+
+  @override
+  Future<void> savePreferences(AppPreferences preferences) async {
+    _preferences = preferences;
   }
 }
 
@@ -57,6 +70,8 @@ void main() {
 
       expect(find.text('設定'), findsOneWidget);
       expect(find.text('同期'), findsOneWidget);
+      expect(find.text('表示'), findsOneWidget);
+      expect(find.text('言語'), findsOneWidget);
       expect(find.text('アプリについて'), findsOneWidget);
     });
 
@@ -115,6 +130,106 @@ void main() {
       expect(wifiTile.value, isTrue);
     });
 
+    testWidgets('テーマ項目の現在値がサブタイトルに表示される', (tester) async {
+      final vm = SettingsViewModel(
+        repository: _FakeSettingsRepository(
+          initialPreferences: const AppPreferences(themeMode: ThemeMode.dark),
+        ),
+      );
+
+      await tester.pumpWidget(_buildHarness(vm: vm));
+      await tester.pumpAndSettle();
+
+      expect(
+        find.widgetWithText(ListTile, 'テーマ'),
+        findsOneWidget,
+      );
+      expect(find.text('ダーク'), findsOneWidget);
+    });
+
+    testWidgets('テーマ項目をタップするとダイアログが開き選択でVMが更新される', (
+      tester,
+    ) async {
+      final vm = SettingsViewModel(
+        repository: _FakeSettingsRepository(),
+      );
+
+      await tester.pumpWidget(_buildHarness(vm: vm));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.widgetWithText(ListTile, 'テーマ'));
+      await tester.pumpAndSettle();
+
+      // ダイアログ内の3択が表示されている
+      expect(find.byType(SimpleDialog), findsOneWidget);
+      expect(
+        find.descendant(
+          of: find.byType(SimpleDialog),
+          matching: find.text('システム設定に従う'),
+        ),
+        findsOneWidget,
+      );
+      expect(
+        find.descendant(
+          of: find.byType(SimpleDialog),
+          matching: find.text('ライト'),
+        ),
+        findsOneWidget,
+      );
+
+      await tester.tap(
+        find.descendant(
+          of: find.byType(SimpleDialog),
+          matching: find.text('ライト'),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(vm.preferences.themeMode, ThemeMode.light);
+    });
+
+    testWidgets('言語項目の現在値がサブタイトルに表示される', (tester) async {
+      final vm = SettingsViewModel(
+        repository: _FakeSettingsRepository(
+          initialPreferences: const AppPreferences(language: AppLanguage.en),
+        ),
+      );
+
+      await tester.pumpWidget(_buildHarness(vm: vm));
+      await tester.pumpAndSettle();
+
+      expect(
+        find.widgetWithText(ListTile, '表示言語'),
+        findsOneWidget,
+      );
+      expect(find.text('英語'), findsOneWidget);
+    });
+
+    testWidgets('言語項目をタップするとダイアログが開き選択でVMが更新される', (
+      tester,
+    ) async {
+      final vm = SettingsViewModel(
+        repository: _FakeSettingsRepository(),
+      );
+
+      await tester.pumpWidget(_buildHarness(vm: vm));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.widgetWithText(ListTile, '表示言語'));
+      await tester.pumpAndSettle();
+
+      expect(find.byType(SimpleDialog), findsOneWidget);
+      await tester.tap(
+        find.descendant(
+          of: find.byType(SimpleDialog),
+          matching: find.text('日本語'),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(vm.preferences.language, AppLanguage.ja);
+    });
+
     testWidgets('バージョン情報がpackage_info_plusから取得して表示される', (tester) async {
       final vm = SettingsViewModel(
         repository: _FakeSettingsRepository(),
@@ -135,6 +250,8 @@ void main() {
       await tester.pumpWidget(_buildHarness(vm: vm));
       await tester.pumpAndSettle();
 
+      // 画面が長いので「ライセンス」項目までスクロールする
+      await tester.scrollUntilVisible(find.text('ライセンス'), 200);
       await tester.tap(find.text('ライセンス'));
       await tester.pumpAndSettle();
 

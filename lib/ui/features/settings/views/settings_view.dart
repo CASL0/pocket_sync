@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:pocket_sync/domain/models/app_preferences.dart';
+import 'package:pocket_sync/l10n/app_localizations.dart';
 import 'package:pocket_sync/l10n/l10n_extension.dart';
 import 'package:pocket_sync/ui/features/settings/view_models/settings_view_model.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +35,22 @@ class SettingsView extends StatelessWidget {
             onChanged: (v) => vm.setBackgroundSync(value: v),
           ),
           const Divider(),
+          _SectionHeader(l10n.settingsAppearanceSection),
+          ListTile(
+            title: Text(l10n.settingsTheme),
+            subtitle: Text(_themeModeLabel(l10n, vm.preferences.themeMode)),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => _showThemeDialog(context, vm),
+          ),
+          const Divider(),
+          _SectionHeader(l10n.settingsLanguageSection),
+          ListTile(
+            title: Text(l10n.settingsLanguage),
+            subtitle: Text(_languageLabel(l10n, vm.preferences.language)),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => _showLanguageDialog(context, vm),
+          ),
+          const Divider(),
           _SectionHeader(l10n.settingsAboutSection),
           FutureBuilder<PackageInfo>(
             future: PackageInfo.fromPlatform(),
@@ -52,6 +70,96 @@ class SettingsView extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<void> _showThemeDialog(
+    BuildContext context,
+    SettingsViewModel vm,
+  ) async {
+    final l10n = context.l10n;
+    final selected = await showDialog<ThemeMode>(
+      context: context,
+      builder: (dialogContext) {
+        return SimpleDialog(
+          title: Text(l10n.settingsTheme),
+          children: [
+            RadioGroup<ThemeMode>(
+              groupValue: vm.preferences.themeMode,
+              onChanged: (value) => Navigator.of(dialogContext).pop(value),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  for (final mode in ThemeMode.values)
+                    RadioListTile<ThemeMode>(
+                      title: Text(_themeModeLabel(l10n, mode)),
+                      value: mode,
+                    ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
+    if (selected != null && selected != vm.preferences.themeMode) {
+      await vm.setThemeMode(selected);
+    }
+  }
+
+  Future<void> _showLanguageDialog(
+    BuildContext context,
+    SettingsViewModel vm,
+  ) async {
+    final l10n = context.l10n;
+    final selected = await showDialog<AppLanguage>(
+      context: context,
+      builder: (dialogContext) {
+        return SimpleDialog(
+          title: Text(l10n.settingsLanguage),
+          children: [
+            RadioGroup<AppLanguage>(
+              groupValue: vm.preferences.language,
+              onChanged: (value) => Navigator.of(dialogContext).pop(value),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  for (final language in AppLanguage.values)
+                    RadioListTile<AppLanguage>(
+                      title: Text(_languageLabel(l10n, language)),
+                      value: language,
+                    ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
+    if (selected != null && selected != vm.preferences.language) {
+      await vm.setLanguage(selected);
+    }
+  }
+}
+
+String _themeModeLabel(AppLocalizations l10n, ThemeMode mode) {
+  switch (mode) {
+    case ThemeMode.system:
+      return l10n.settingsThemeSystem;
+    case ThemeMode.light:
+      return l10n.settingsThemeLight;
+    case ThemeMode.dark:
+      return l10n.settingsThemeDark;
+  }
+}
+
+String _languageLabel(AppLocalizations l10n, AppLanguage language) {
+  switch (language) {
+    case AppLanguage.system:
+      return l10n.settingsLanguageSystem;
+    case AppLanguage.ja:
+      return l10n.settingsLanguageJapanese;
+    case AppLanguage.en:
+      return l10n.settingsLanguageEnglish;
   }
 }
 

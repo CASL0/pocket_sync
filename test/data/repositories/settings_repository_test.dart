@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart' show ThemeMode;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pocket_sync/data/repositories/settings_repository.dart';
+import 'package:pocket_sync/domain/models/app_preferences.dart';
 import 'package:pocket_sync/domain/models/sync_settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -52,6 +54,47 @@ void main() {
 
       expect(loaded.wifiOnly, isFalse);
       expect(loaded.chargingOnly, isTrue);
+    });
+
+    test('未設定状態のloadPreferencesはsystemデフォルトを返す', () {
+      final prefs = repository.loadPreferences();
+
+      expect(prefs.themeMode, ThemeMode.system);
+      expect(prefs.language, AppLanguage.system);
+    });
+
+    test('savePreferencesした値がloadPreferencesで復元される', () async {
+      const target = AppPreferences(
+        themeMode: ThemeMode.dark,
+        language: AppLanguage.en,
+      );
+
+      await repository.savePreferences(target);
+      final loaded = repository.loadPreferences();
+
+      expect(loaded, equals(target));
+    });
+
+    test('AppPreferencesはenum名で永続化される', () async {
+      const target = AppPreferences(
+        themeMode: ThemeMode.light,
+        language: AppLanguage.ja,
+      );
+
+      await repository.savePreferences(target);
+
+      expect(prefs.getString('app.theme_mode'), 'light');
+      expect(prefs.getString('app.language'), 'ja');
+    });
+
+    test('未知の永続化値はデフォルトにフォールバックする', () async {
+      await prefs.setString('app.theme_mode', 'unknown');
+      await prefs.setString('app.language', 'fr');
+
+      final loaded = repository.loadPreferences();
+
+      expect(loaded.themeMode, ThemeMode.system);
+      expect(loaded.language, AppLanguage.system);
     });
   });
 }

@@ -77,6 +77,56 @@
     "description": "バックグラウンド同期を有効にするかのトグルラベル"
   },
 
+  "settingsAppearanceSection": "表示",
+  "@settingsAppearanceSection": {
+    "description": "設定画面の「表示」セクション見出し（テーマなど）"
+  },
+
+  "settingsTheme": "テーマ",
+  "@settingsTheme": {
+    "description": "テーマ選択項目のラベル"
+  },
+
+  "settingsThemeSystem": "システム設定に従う",
+  "@settingsThemeSystem": {
+    "description": "テーマ選択肢: 端末のシステム設定に追従"
+  },
+
+  "settingsThemeLight": "ライト",
+  "@settingsThemeLight": {
+    "description": "テーマ選択肢: ライトモード"
+  },
+
+  "settingsThemeDark": "ダーク",
+  "@settingsThemeDark": {
+    "description": "テーマ選択肢: ダークモード"
+  },
+
+  "settingsLanguageSection": "言語",
+  "@settingsLanguageSection": {
+    "description": "設定画面の「言語」セクション見出し"
+  },
+
+  "settingsLanguage": "表示言語",
+  "@settingsLanguage": {
+    "description": "言語選択項目のラベル"
+  },
+
+  "settingsLanguageSystem": "システム設定に従う",
+  "@settingsLanguageSystem": {
+    "description": "言語選択肢: 端末のシステム設定に追従"
+  },
+
+  "settingsLanguageJapanese": "日本語",
+  "@settingsLanguageJapanese": {
+    "description": "言語選択肢: 日本語"
+  },
+
+  "settingsLanguageEnglish": "英語",
+  "@settingsLanguageEnglish": {
+    "description": "言語選択肢: 英語"
+  },
+
   "settingsAboutSection": "アプリについて",
   "@settingsAboutSection": {
     "description": "設定画面の「アプリについて」セクション見出し"
