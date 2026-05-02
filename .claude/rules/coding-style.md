@@ -65,9 +65,10 @@ paths:
 
 ### import
 
-- `lib/` 内のファイルから `lib/` 内の別ファイルを参照するときは **相対 import** を使う（`import '../models/sync_status.dart';`）。
-- `lib/` 外（例: `test/`）から `lib/` を参照するときは **package import** を使う（`import 'package:pocket_sync/...';`）。
+- 自プロジェクトのファイルを参照するときは常に **package import** を使う（`import 'package:pocket_sync/...';`）。`very_good_analysis` の `always_use_package_imports` で機械的に強制される。
+- `test/` から `lib/` を参照するときも同じく package import。
 - 同じファイルに対する相対 import と package import の混在は禁止（型の同一性が壊れる）。
+- 自動生成された ARB 由来のロケールファイル（`app_localizations_*.dart`）は flutter gen-l10n が相対 import で生成する。これは生成物なので手で触らない。
 
 ### 文字列
 
