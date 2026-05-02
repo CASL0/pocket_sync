@@ -3,7 +3,12 @@
   "permissions": {
     "allow": [
       "Bash(mise exec -- flutter *)",
-      "Bash(mise exec -- dart *)"
+      "Bash(mise exec -- dart *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
+    ],
+    "deny": [
+      "Bash(git add .)"
     ]
   },
   "hooks": {
