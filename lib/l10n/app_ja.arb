@@ -36,6 +36,31 @@
     "description": "ファイル一覧画面の FAB のラベル（同期ソースを追加）"
   },
 
+  "fileListEmpty": "まだファイルがありません。右下の + から追加してください。",
+  "@fileListEmpty": {
+    "description": "ファイル一覧が空のときに表示する案内文"
+  },
+
+  "fileStatusLocalOnly": "ローカルのみ",
+  "@fileStatusLocalOnly": {
+    "description": "同期ステータスラベル: ローカルにのみ存在しまだ同期されていない"
+  },
+
+  "addSourceFromFiles": "ファイルから選択",
+  "@addSourceFromFiles": {
+    "description": "ソース追加ボトムシートの選択肢: ファイルピッカー (SAF / UIDocumentPicker) を起動"
+  },
+
+  "addSourceFromPhotos": "写真から選択",
+  "@addSourceFromPhotos": {
+    "description": "ソース追加ボトムシートの選択肢: 写真/動画ピッカー (PHPicker / Photo Picker) を起動"
+  },
+
+  "addSourcePickerFailed": "ピッカーを開けませんでした",
+  "@addSourcePickerFailed": {
+    "description": "ピッカー起動・選択処理で例外が発生したときの SnackBar 文言"
+  },
+
   "fileDetailTitle": "ファイル詳細",
   "@fileDetailTitle": {
     "description": "ファイル詳細画面の AppBar タイトル"
