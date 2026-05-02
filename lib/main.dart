@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:pocket_sync/data/repositories/file_list_repository.dart';
 import 'package:pocket_sync/data/repositories/settings_repository.dart';
+import 'package:pocket_sync/data/sources/file_picker_port.dart';
+import 'package:pocket_sync/data/sources/file_picker_port_impl.dart';
+import 'package:pocket_sync/data/sources/image_picker_port.dart';
+import 'package:pocket_sync/data/sources/image_picker_port_impl.dart';
 import 'package:pocket_sync/domain/models/app_preferences.dart';
 import 'package:pocket_sync/l10n/app_localizations.dart';
 import 'package:pocket_sync/l10n/l10n_extension.dart';
 import 'package:pocket_sync/routing/app_router.dart';
+import 'package:pocket_sync/ui/features/file_list/view_models/add_source_view_model.dart';
+import 'package:pocket_sync/ui/features/file_list/view_models/file_list_view_model.dart';
 import 'package:pocket_sync/ui/features/settings/view_models/settings_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,6 +40,27 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<SettingsViewModel>(
           create: (context) => SettingsViewModel(
             repository: context.read<SettingsRepository>(),
+          ),
+        ),
+        Provider<FileListRepository>(
+          create: (_) => FileListRepository(),
+        ),
+        Provider<FilePickerPort>(
+          create: (_) => const FilePickerPortImpl(),
+        ),
+        Provider<ImagePickerPort>(
+          create: (_) => const ImagePickerPortImpl(),
+        ),
+        ChangeNotifierProvider<FileListViewModel>(
+          create: (context) => FileListViewModel(
+            repository: context.read<FileListRepository>(),
+          ),
+        ),
+        ChangeNotifierProvider<AddSourceViewModel>(
+          create: (context) => AddSourceViewModel(
+            filePicker: context.read<FilePickerPort>(),
+            imagePicker: context.read<ImagePickerPort>(),
+            fileListViewModel: context.read<FileListViewModel>(),
           ),
         ),
       ],
