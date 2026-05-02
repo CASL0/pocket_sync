@@ -5,7 +5,6 @@
   "navFiles": "Files",
   "navActivity": "Activity",
   "fileListTitle": "Files",
-  "fileListPlaceholder": "File list (coming soon)",
   "fileListSettingsTooltip": "Settings",
   "fileListAddSource": "Add source",
   "fileListEmpty": "No files yet. Tap + to add one.",

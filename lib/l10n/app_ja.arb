@@ -21,11 +21,6 @@
     "description": "ファイル一覧画面の AppBar タイトル"
   },
 
-  "fileListPlaceholder": "ファイル一覧（実装予定）",
-  "@fileListPlaceholder": {
-    "description": "ファイル一覧画面の本実装が無い間のプレースホルダ文言"
-  },
-
   "fileListSettingsTooltip": "設定",
   "@fileListSettingsTooltip": {
     "description": "ファイル一覧画面の AppBar 設定アイコンの tooltip"
