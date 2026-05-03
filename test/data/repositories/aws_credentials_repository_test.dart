@@ -13,8 +13,9 @@ void main() {
 
   setUp(() async {
     secureBackingStore = <String, String>{};
-    FlutterSecureStoragePlatform.instance =
-        TestFlutterSecureStoragePlatform(secureBackingStore);
+    FlutterSecureStoragePlatform.instance = TestFlutterSecureStoragePlatform(
+      secureBackingStore,
+    );
     SharedPreferences.setMockInitialValues({});
     prefs = await SharedPreferences.getInstance();
     repo = AwsCredentialsRepository(
