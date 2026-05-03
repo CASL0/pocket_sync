@@ -10,3 +10,4 @@
 | [0004](0004-routing-with-go-router.md) | ルーティングに go_router を採用する | accepted | 2026-04-30 |
 | [0005](0005-i18n-with-flutter-localizations.md) | 国際化に flutter_localizations + ARB を採用する | accepted | 2026-05-01 |
 | [0006](0006-file-picker-with-two-choice-bottom-sheet.md) | ファイル/写真の選択 UI に 2 択ボトムシート + プラットフォーム公式ピッカーを採用する | accepted | 2026-05-01 |
+| [0007](0007-aws-auth-with-user-supplied-iam-access-key.md) | AWS 認証情報をユーザー入力の IAM Access Key で扱う | accepted | 2026-05-03 |

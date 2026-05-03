@@ -4,6 +4,7 @@ import 'package:pocket_sync/domain/models/app_preferences.dart';
 import 'package:pocket_sync/l10n/app_localizations.dart';
 import 'package:pocket_sync/l10n/l10n_extension.dart';
 import 'package:pocket_sync/ui/features/settings/view_models/settings_view_model.dart';
+import 'package:pocket_sync/ui/features/settings/views/aws_credentials_form.dart';
 import 'package:provider/provider.dart';
 
 class SettingsView extends StatelessWidget {
@@ -34,6 +35,9 @@ class SettingsView extends StatelessWidget {
             value: vm.settings.backgroundSync,
             onChanged: (v) => vm.setBackgroundSync(value: v),
           ),
+          const Divider(),
+          _SectionHeader(l10n.settingsAwsSection),
+          const AwsCredentialsForm(),
           const Divider(),
           _SectionHeader(l10n.settingsAppearanceSection),
           ListTile(

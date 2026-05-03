@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/test/test_flutter_secure_storage_platform.dart';
+import 'package:flutter_secure_storage_platform_interface/flutter_secure_storage_platform_interface.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pocket_sync/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,6 +9,9 @@ void main() {
   late SharedPreferences prefs;
 
   setUp(() async {
+    FlutterSecureStoragePlatform.instance = TestFlutterSecureStoragePlatform(
+      {},
+    );
     SharedPreferences.setMockInitialValues({});
     prefs = await SharedPreferences.getInstance();
   });
