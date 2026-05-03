@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:pocket_sync/data/repositories/aws_credentials_repository.dart';
 import 'package:pocket_sync/data/repositories/file_list_repository.dart';
 import 'package:pocket_sync/data/repositories/settings_repository.dart';
 import 'package:pocket_sync/data/sources/file_picker_port.dart';
@@ -11,9 +13,21 @@ import 'package:pocket_sync/l10n/l10n_extension.dart';
 import 'package:pocket_sync/routing/app_router.dart';
 import 'package:pocket_sync/ui/features/file_list/view_models/add_source_view_model.dart';
 import 'package:pocket_sync/ui/features/file_list/view_models/file_list_view_model.dart';
+import 'package:pocket_sync/ui/features/settings/view_models/aws_credentials_view_model.dart';
 import 'package:pocket_sync/ui/features/settings/view_models/settings_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+/// アプリ全体で共有する [FlutterSecureStorage] インスタンス。
+/// iOS は `first_unlock_this_device` を指定し iCloud バックアップから
+/// AWS 認証情報を除外する。Android は v10 のデフォルト（AES-GCM +
+/// RSA-OAEP 鍵ラップ）に任せる（`encryptedSharedPreferences` は
+/// v10 で deprecated）。
+const _secureStorage = FlutterSecureStorage(
+  iOptions: IOSOptions(
+    accessibility: KeychainAccessibility.first_unlock_this_device,
+  ),
+);
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,6 +75,17 @@ class MyApp extends StatelessWidget {
             filePicker: context.read<FilePickerPort>(),
             imagePicker: context.read<ImagePickerPort>(),
             fileListViewModel: context.read<FileListViewModel>(),
+          ),
+        ),
+        Provider<AwsCredentialsRepository>(
+          create: (_) => AwsCredentialsRepository(
+            secureStorage: _secureStorage,
+            prefs: sharedPreferences,
+          ),
+        ),
+        ChangeNotifierProvider<AwsCredentialsViewModel>(
+          create: (context) => AwsCredentialsViewModel(
+            repository: context.read<AwsCredentialsRepository>(),
           ),
         ),
       ],

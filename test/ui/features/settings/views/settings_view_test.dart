@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:pocket_sync/data/repositories/aws_credentials_repository.dart';
 import 'package:pocket_sync/data/repositories/settings_repository.dart';
 import 'package:pocket_sync/domain/models/app_preferences.dart';
+import 'package:pocket_sync/domain/models/aws_credentials.dart';
 import 'package:pocket_sync/domain/models/sync_settings.dart';
 import 'package:pocket_sync/l10n/app_localizations.dart';
+import 'package:pocket_sync/ui/features/settings/view_models/aws_credentials_view_model.dart';
 import 'package:pocket_sync/ui/features/settings/view_models/settings_view_model.dart';
 import 'package:pocket_sync/ui/features/settings/views/settings_view.dart';
 import 'package:provider/provider.dart';
@@ -36,9 +39,29 @@ class _FakeSettingsRepository implements SettingsRepository {
   }
 }
 
+class _FakeAwsCredentialsRepository implements AwsCredentialsRepository {
+  AwsCredentials _stored = AwsCredentials.empty;
+
+  @override
+  Future<AwsCredentials> load() async => _stored;
+
+  @override
+  Future<void> save(AwsCredentials creds) async => _stored = creds;
+
+  @override
+  Future<void> clear() async => _stored = AwsCredentials.empty;
+}
+
 Widget _buildHarness({required SettingsViewModel vm}) {
-  return ChangeNotifierProvider<SettingsViewModel>.value(
-    value: vm,
+  return MultiProvider(
+    providers: [
+      ChangeNotifierProvider<SettingsViewModel>.value(value: vm),
+      ChangeNotifierProvider<AwsCredentialsViewModel>(
+        create: (_) => AwsCredentialsViewModel(
+          repository: _FakeAwsCredentialsRepository(),
+        ),
+      ),
+    ],
     child: const MaterialApp(
       locale: Locale('ja'),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -46,6 +69,15 @@ Widget _buildHarness({required SettingsViewModel vm}) {
       home: SettingsView(),
     ),
   );
+}
+
+/// AWS 認証情報セクションが入って画面が縦長になったため、
+/// 既存テストでビューポート不足にならないよう物理サイズを拡張する。
+/// 1080x3000 で全項目が見える想定。
+void _useTallViewport(WidgetTester tester) {
+  tester.view.physicalSize = const Size(1080, 3000);
+  tester.view.devicePixelRatio = 1.0;
+  addTearDown(tester.view.reset);
 }
 
 void main() {
@@ -61,6 +93,7 @@ void main() {
 
   group('SettingsView', () {
     testWidgets('AppBarタイトルとセクション見出しが表示される', (tester) async {
+      _useTallViewport(tester);
       final vm = SettingsViewModel(
         repository: _FakeSettingsRepository(),
       );
@@ -70,6 +103,7 @@ void main() {
 
       expect(find.text('設定'), findsOneWidget);
       expect(find.text('同期'), findsOneWidget);
+      expect(find.text('AWS 認証情報'), findsOneWidget);
       expect(find.text('表示'), findsOneWidget);
       expect(find.text('言語'), findsOneWidget);
       expect(find.text('アプリについて'), findsOneWidget);
@@ -131,6 +165,7 @@ void main() {
     });
 
     testWidgets('テーマ項目の現在値がサブタイトルに表示される', (tester) async {
+      _useTallViewport(tester);
       final vm = SettingsViewModel(
         repository: _FakeSettingsRepository(
           initialPreferences: const AppPreferences(themeMode: ThemeMode.dark),
@@ -150,6 +185,7 @@ void main() {
     testWidgets('テーマ項目をタップするとダイアログが開き選択でVMが更新される', (
       tester,
     ) async {
+      _useTallViewport(tester);
       final vm = SettingsViewModel(
         repository: _FakeSettingsRepository(),
       );
@@ -189,6 +225,7 @@ void main() {
     });
 
     testWidgets('言語項目の現在値がサブタイトルに表示される', (tester) async {
+      _useTallViewport(tester);
       final vm = SettingsViewModel(
         repository: _FakeSettingsRepository(
           initialPreferences: const AppPreferences(language: AppLanguage.en),
@@ -208,6 +245,7 @@ void main() {
     testWidgets('言語項目をタップするとダイアログが開き選択でVMが更新される', (
       tester,
     ) async {
+      _useTallViewport(tester);
       final vm = SettingsViewModel(
         repository: _FakeSettingsRepository(),
       );
@@ -231,6 +269,7 @@ void main() {
     });
 
     testWidgets('バージョン情報がpackage_info_plusから取得して表示される', (tester) async {
+      _useTallViewport(tester);
       final vm = SettingsViewModel(
         repository: _FakeSettingsRepository(),
       );
@@ -243,6 +282,7 @@ void main() {
     });
 
     testWidgets('ライセンスをタップするとshowLicensePageが開く', (tester) async {
+      _useTallViewport(tester);
       final vm = SettingsViewModel(
         repository: _FakeSettingsRepository(),
       );
@@ -250,13 +290,10 @@ void main() {
       await tester.pumpWidget(_buildHarness(vm: vm));
       await tester.pumpAndSettle();
 
-      // 画面が長いので「ライセンス」項目までスクロールする
-      await tester.scrollUntilVisible(find.text('ライセンス'), 200);
       await tester.tap(find.text('ライセンス'));
       await tester.pumpAndSettle();
 
-      // showLicensePageが開くと"ライセンス"を含むタイトルや関連UIが表示される
-      // 実装依存なのでLicensePageの存在を確認
+      // showLicensePage が開くと LicensePage が現れる
       expect(find.byType(LicensePage), findsOneWidget);
     });
   });
