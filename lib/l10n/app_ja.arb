@@ -162,6 +162,111 @@
     "description": "ライセンス画面への導線項目のラベル"
   },
 
+  "settingsAwsSection": "AWS 認証情報",
+  "@settingsAwsSection": {
+    "description": "設定画面の「AWS 認証情報」セクション見出し"
+  },
+
+  "settingsAwsDescription": "S3 バケットに接続するための認証情報を設定します",
+  "@settingsAwsDescription": {
+    "description": "AWS 認証情報セクションの説明文"
+  },
+
+  "settingsAwsAccessKeyId": "Access Key ID",
+  "@settingsAwsAccessKeyId": {
+    "description": "AWS 認証情報フォームの Access Key ID 入力欄ラベル"
+  },
+
+  "settingsAwsSecretAccessKey": "Secret Access Key",
+  "@settingsAwsSecretAccessKey": {
+    "description": "AWS 認証情報フォームの Secret Access Key 入力欄ラベル"
+  },
+
+  "settingsAwsRegion": "リージョン",
+  "@settingsAwsRegion": {
+    "description": "AWS 認証情報フォームのリージョン入力欄ラベル"
+  },
+
+  "settingsAwsBucketName": "バケット名",
+  "@settingsAwsBucketName": {
+    "description": "AWS 認証情報フォームのバケット名入力欄ラベル"
+  },
+
+  "settingsAwsSecretPlaceholder": "保存済み（未編集）",
+  "@settingsAwsSecretPlaceholder": {
+    "description": "Secret 入力欄の hint。保存済みのキーは画面に再表示せず、ここに「保存済み」と示すだけ。空のまま保存しても既存値は維持される"
+  },
+
+  "settingsAwsSaveButton": "保存",
+  "@settingsAwsSaveButton": {
+    "description": "AWS 認証情報フォームの保存ボタン"
+  },
+
+  "settingsAwsClearButton": "削除",
+  "@settingsAwsClearButton": {
+    "description": "AWS 認証情報フォームの削除ボタン（4 項目すべて消す）"
+  },
+
+  "settingsAwsClearConfirmTitle": "認証情報を削除",
+  "@settingsAwsClearConfirmTitle": {
+    "description": "削除確認ダイアログのタイトル"
+  },
+
+  "settingsAwsClearConfirmMessage": "保存済みの 4 項目すべてを削除します。この操作は元に戻せません。",
+  "@settingsAwsClearConfirmMessage": {
+    "description": "削除確認ダイアログの本文"
+  },
+
+  "settingsAwsClearConfirmCancel": "キャンセル",
+  "@settingsAwsClearConfirmCancel": {
+    "description": "削除確認ダイアログのキャンセルボタン"
+  },
+
+  "settingsAwsClearConfirmDelete": "削除する",
+  "@settingsAwsClearConfirmDelete": {
+    "description": "削除確認ダイアログの確定ボタン（destructive アクション）"
+  },
+
+  "settingsAwsSaveSuccess": "保存しました",
+  "@settingsAwsSaveSuccess": {
+    "description": "保存成功時の SnackBar 文言"
+  },
+
+  "settingsAwsSaveFailed": "保存に失敗しました",
+  "@settingsAwsSaveFailed": {
+    "description": "保存失敗時の SnackBar 文言"
+  },
+
+  "settingsAwsClearSuccess": "削除しました",
+  "@settingsAwsClearSuccess": {
+    "description": "削除成功時の SnackBar 文言"
+  },
+
+  "settingsAwsClearFailed": "削除に失敗しました",
+  "@settingsAwsClearFailed": {
+    "description": "削除失敗時の SnackBar 文言"
+  },
+
+  "settingsAwsValidationRequired": "入力してください",
+  "@settingsAwsValidationRequired": {
+    "description": "必須フィールドの未入力エラー"
+  },
+
+  "settingsAwsValidationAccessKeyIdFormat": "英数字 16 文字以上で入力してください",
+  "@settingsAwsValidationAccessKeyIdFormat": {
+    "description": "Access Key ID の形式エラー（AKIA / ASIA / AROA 等を許容するため緩めに英数字 16 桁以上）"
+  },
+
+  "settingsAwsValidationRegionFormat": "リージョン形式が正しくありません（例: ap-northeast-1）",
+  "@settingsAwsValidationRegionFormat": {
+    "description": "Region の形式エラー"
+  },
+
+  "settingsAwsValidationBucketFormat": "バケット名の形式が正しくありません",
+  "@settingsAwsValidationBucketFormat": {
+    "description": "Bucket 名の形式エラー（小文字英数字 + - + . で 3〜63 文字）"
+  },
+
   "syncActivityTitle": "アクティビティ",
   "@syncActivityTitle": {
     "description": "同期アクティビティ画面の AppBar タイトル"
